@@ -12,18 +12,21 @@ public class StringCalculator {
         }
 
         String delimiter = DELIMITER;
-        String numbers = input;
+        String numbersText = input;
         if (input.startsWith(DELIMITER_PREFIX)) {
             delimiter = input.substring(DELIMITER_PREFIX.length(), DELIMITER_PREFIX.length() + 1);
-            numbers = input.substring(input.indexOf("\n") + 1);
+            numbersText = input.substring(input.indexOf("\n") + 1);
         }
 
-        String[] splitedNumbers = numbers.split(delimiter, -1);
-        validateNotEmptyNumbers(splitedNumbers);
+        String[] splitedTextNumbers = numbersText.split(delimiter, -1);
+        validateNotEmptyNumbers(splitedTextNumbers);
 
-        return Arrays.stream(splitedNumbers)
+        int[] numbers = Arrays.stream(splitedTextNumbers)
                 .mapToInt(Integer::valueOf)
-                .sum();
+                .toArray();
+        validateNotNegativeNumbers(numbers);
+
+        return Arrays.stream(numbers).sum();
     }
 
     private void validateNotEmptyNumbers(String[] splitedNumbers) {
@@ -31,6 +34,15 @@ public class StringCalculator {
             if (s.isBlank()) {
                 throw new IllegalArgumentException("Wrong input parameters");
             }
+        }
+    }
+
+    private void validateNotNegativeNumbers(int[] numbers) {
+        int[] negativeNumbers = Arrays.stream(numbers)
+                .filter(el -> el < 0)
+                .toArray();
+        if (negativeNumbers.length != 0) {
+            throw new IllegalArgumentException("Negative numbers not allowed: " + Arrays.toString(negativeNumbers));
         }
     }
 }
