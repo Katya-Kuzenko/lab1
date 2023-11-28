@@ -41,4 +41,10 @@ public class StringCalculatorTest {
         assertThrows(IllegalArgumentException.class, () -> stringCalculator.add("1,\n"));
     }
 
+    @Test
+    public void teststep4() {
+        int result = stringCalculator.add("//;\n1;2");
+        assertEquals(3, result);
+    }
+
 }
