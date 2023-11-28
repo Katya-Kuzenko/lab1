@@ -1,7 +1,7 @@
 package kuz.lab1;
 
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class StringCalculatorTest {
 
@@ -29,6 +29,16 @@ public class StringCalculatorTest {
     public void teststep2() {
         int result = stringCalculator.add("1,2,3,4,5");
         assertEquals(15, result);
+    }
+
+    @Test
+    public void teststep3_1() {
+        int result = stringCalculator.add("1\n2,3");
+        assertEquals(6, result);
+    }
+    @Test
+    public void teststep3_2() {
+        assertThrows(IllegalArgumentException.class, () -> stringCalculator.add("1,\n"));
     }
 
 }
