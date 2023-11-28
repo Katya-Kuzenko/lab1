@@ -25,5 +25,10 @@ public class StringCalculatorTest {
         assertEquals(3, result);
     }
 
+    @Test
+    public void teststep2() {
+        int result = stringCalculator.add("1,2,3,4,5");
+        assertEquals(15, result);
+    }
 
 }
