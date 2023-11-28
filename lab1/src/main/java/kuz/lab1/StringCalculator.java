@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class StringCalculator {
     public static final String DELIMITER = ",|\n";
     public static final String DELIMITER_PREFIX = "//";
-
+    public static final int NUMBERS_UPPER_LIMIT = 1000;
     int add(String input) {
         if (input.isEmpty()) {
             return 0;
@@ -26,7 +26,9 @@ public class StringCalculator {
                 .toArray();
         validateNotNegativeNumbers(numbers);
 
-        return Arrays.stream(numbers).sum();
+        return Arrays.stream(numbers)
+                .filter(el -> el <= NUMBERS_UPPER_LIMIT)
+                .sum();
     }
 
     private void validateNotEmptyNumbers(String[] splitedNumbers) {
