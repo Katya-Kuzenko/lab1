@@ -43,7 +43,7 @@ public class StringCalculatorTest {
 
     @Test
     public void teststep4() {
-        int result = stringCalculator.add("//;\n1;2");
+        int result = stringCalculator.add("//[;]\n1;2");
         assertEquals(3, result);
     }
 
@@ -58,4 +58,12 @@ public class StringCalculatorTest {
         int result = stringCalculator.add("1000,999,1001");
         assertEquals(1999, result);
     }
+
+    @Test
+    public void teststep7() {
+        int result = stringCalculator.add("//[***]\n1***2***3");
+        assertEquals(6, result);
+    }
+
+
 }

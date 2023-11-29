@@ -1,11 +1,15 @@
 package kuz.lab1;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Arrays;
 
 public class StringCalculator {
     public static final String DELIMITER = ",|\n";
     public static final String DELIMITER_PREFIX = "//";
     public static final int NUMBERS_UPPER_LIMIT = 1000;
+    public static final String DELIMITER_OPEN_WITH = "[";
+    public static final String DELIMITER_CLOSE_WITH = "]";
     int add(String input) {
         if (input.isEmpty()) {
             return 0;
@@ -14,16 +18,17 @@ public class StringCalculator {
         String delimiter = DELIMITER;
         String numbersText = input;
         if (input.startsWith(DELIMITER_PREFIX)) {
-            delimiter = input.substring(DELIMITER_PREFIX.length(), DELIMITER_PREFIX.length() + 1);
+            delimiter = input.substring(input.indexOf(DELIMITER_OPEN_WITH) + 1, input.indexOf(DELIMITER_CLOSE_WITH));
             numbersText = input.substring(input.indexOf("\n") + 1);
         }
 
-        String[] splitedTextNumbers = numbersText.split(delimiter, -1);
+        String[] splitedTextNumbers = numbersText.split(backslashMetaCharacter(delimiter), -1);
         validateNotEmptyNumbers(splitedTextNumbers);
 
         int[] numbers = Arrays.stream(splitedTextNumbers)
                 .mapToInt(Integer::valueOf)
                 .toArray();
+
         validateNotNegativeNumbers(numbers);
 
         return Arrays.stream(numbers)
@@ -46,5 +51,9 @@ public class StringCalculator {
         if (negativeNumbers.length != 0) {
             throw new IllegalArgumentException("Negative numbers not allowed: " + Arrays.toString(negativeNumbers));
         }
+    }
+
+    private String backslashMetaCharacter(String str) {
+        return StringUtils.replaceEach(str, new String[]{"*", "+", "?", "^", "$"}, new String[]{"\\*", "\\+", "\\?", "\\^", "\\$"});
     }
 }
