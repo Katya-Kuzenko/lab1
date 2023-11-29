@@ -71,5 +71,11 @@ public class StringCalculatorTest {
         assertEquals(6, result);
     }
 
+    @Test
+    public void teststep9() {
+        int result = stringCalculator.add("//[**][%%]\n2**2%%10");
+        assertEquals(14, result);
+    }
+
 
 }
