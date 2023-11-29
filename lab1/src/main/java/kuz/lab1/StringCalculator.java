@@ -18,8 +18,9 @@ public class StringCalculator {
         String delimiter = DELIMITER;
         String numbersText = input;
         if (input.startsWith(DELIMITER_PREFIX)) {
-            delimiter = input.substring(input.indexOf(DELIMITER_OPEN_WITH) + 1, input.indexOf(DELIMITER_CLOSE_WITH));
-            numbersText = input.substring(input.indexOf("\n") + 1);
+            String[] delimiters = StringUtils.substringsBetween(input, DELIMITER_OPEN_WITH, DELIMITER_CLOSE_WITH);
+            delimiter = String.join("|", delimiters);
+            numbersText = StringUtils.substringAfter(input, "\n");
         }
 
         String[] splitedTextNumbers = numbersText.split(backslashMetaCharacter(delimiter), -1);
